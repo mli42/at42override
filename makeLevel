@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+printUsage() {
+  echo "Usage: ${1} <levelNb> [source.ext=c]"
+  exit 1
+}
+
+[ -z "${1}" ] && printUsage "${0}"
+
+levelNb=$(printf "%02d" "${1}")
+subdir="level${levelNb}"
+src_ext=$([ -z "${2}" ] && echo c || echo ${2})
+
+mkdir -p "${subdir}/Ressources/assets"
+echo "# ${subdir}" >> "${subdir}/Ressources/README.md"
+touch "${subdir}/flag" "${subdir}/source.${src_ext}"
+
+LV=${subdir} HOST="192.168.56.101";
+# scp -P 4242 ${LV}@${HOST}:/home/users/${LV}/${LV} ./${LV}.out
