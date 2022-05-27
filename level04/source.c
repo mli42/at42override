@@ -1,5 +1,10 @@
 #include <sys/types.h>
 #include <unistd.h>
+#include <sys/prctl.h>
+#include <sys/ptrace.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int main(void)
 {
@@ -10,9 +15,29 @@ int main(void)
   int c; // 0xac - 0xa8
   pid_t pid;
 
-  if ((pid = fork()) != 0) {
+  if ((pid = fork()) == 0) {
+    // Child process
+    // #define PR_SET_PDEATHSIG  1  /* Second arg is a signal */
+    prctl(1, 1);
+    ptrace(0, 0, NULL, NULL);
+    puts("Give me some shellcode, k");
+    gets(s);
+    return 0;
+  }
+  begin_wait:
+  wait(&wstatus);
+
+  a = b = wstatus;
+  if (((a & 0x7f) == 0) || ((b & 0x7f) + 1) != 0) {
+    puts("child is exiting...");
     return 0;
   }
 
+  c = ptrace(3, pid, 0x2c, 0);
+  if (c != 0xb)
+    goto begin_wait;
+
+  puts("no exec() for you");
+  kill(pid, 9);
   return (0);
 }
