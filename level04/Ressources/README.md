@@ -1,5 +1,11 @@
 # level04
 
+<!-- >>> "/home/users/level05/.pass"[::-1].encode("hex") -->
+
+https://unix.stackexchange.com/questions/421750/where-do-you-find-the-syscall-table-for-linux
+
+https://github.com/torvalds/linux/blob/v4.17/arch/x86/entry/syscalls/syscall_32.tbl#L17
+
 python -c 'print "A"*157' | ltrace -f ./level04 segv
 
 155 does not segv
