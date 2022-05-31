@@ -1,11 +1,14 @@
 
 
-int auth() {
+int auth(login, pass) {
 
-  strcspn();
-  strnlen();
+  strcspn(login, "\n");
+  login['\n'] = 0;
+  if (strnlen(login) > 5)
+  {
   ptrace();
   puts();
+  }
 }
 
 
