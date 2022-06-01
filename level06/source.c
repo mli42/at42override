@@ -11,6 +11,8 @@ int auth(char *login, int pass) {
       puts(); //tampering detected
       return false;
     }
+    // tres flou
+    login[3]
 
 
     return true
