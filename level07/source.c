@@ -9,13 +9,11 @@ unsigned int get_unum(void)
     return res;
 }
 
-
 int read_number() {
 
   printf();
   get_unum();
   printf();
-
 }
 
 
@@ -33,5 +31,10 @@ int store_number()
 }
 
 int main() {
+
+  memset(argv[1,2,3....], 0);
+
+  welcome_to_will_crappy_storage_machin_with_3command();
+  command = fgets(stdin);
 
 }
