@@ -32,7 +32,8 @@ int store_number()
 
 int main() {
 
-  memset(argv[1,2,3....], 0);
+  while (--argc >= 0)
+  memset(argv[argc], 0);
 
   welcome_to_will_crappy_storage_machin_with_3command();
   command = fgets(stdin);
