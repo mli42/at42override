@@ -1,13 +1,19 @@
 
 
-int auth(login, pass) {
+int auth(char *login, int pass) {
 
   strcspn(login, "\n");
   login['\n'] = 0;
   if (strnlen(login) > 5)
   {
-  ptrace();
-  puts();
+    if (ptrace() == -1)
+    {
+      puts(); //tampering detected
+      return false;
+    }
+
+
+    return true
   }
 }
 
@@ -22,9 +28,9 @@ int main() {
   puts();
   puts();
   puts();
-              //  ***********************************
-              //  ***** NEW ACCOUNT DETECTED ********
-              //  ***********************************
+  //  ***********************************
+  //  ***** NEW ACCOUNT DETECTED ********
+  //  ***********************************
   printf("-> Enter Serial: ");
   char *password = scanf(stdin);
   if (auth())
