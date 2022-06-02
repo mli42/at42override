@@ -39,7 +39,7 @@ int main(int argc, char **argv)
   }
 
   path = "./backups/";
-  strncat(path, argv[1], strlen(path));
+  strncat(path, argv[1], 0x63 - strlen(path));
 
   if ((fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0660)) == 0) {
     printf("ERROR: Failed to open %s%s\n", "./backups/", argv[1]);
