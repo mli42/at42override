@@ -12,9 +12,9 @@ int main() {
 
   while(to_test != 0xffffffff)
   {
-    while (to_test % 3 == 0 || ((unsigned int)to_test) << 2 != 114 )
+    while (to_test % 3 == 0 || ((to_test << 2) != 114 ))
       to_test++;
-    to_check = to_test;
+    to_check = to_test << 2;
     printf("%" PRIx64 " %u %u\n", to_test, to_check, to_test % 3); 
     to_test++;
   }
