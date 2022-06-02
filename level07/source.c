@@ -1,4 +1,9 @@
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#define STORAGE_SIZE 100
 
 unsigned int get_unum(void)
 {
@@ -8,51 +13,6 @@ unsigned int get_unum(void)
     clear_stdin();
     return res;
 }
-
-int read_number() {
-
-  printf();
-  get_unum();
-  printf();
-}
-
-
-int store_number()
-{
-  printf();
-  get_unum();
-  printf();
-  get_unum();
-
-  puts();
-  puts();
-  puts();
-
-}
-
-int main() {
-
-  while (--argc >= 0)
-  memset(argv[argc], 0, size(argv[argc]));
-
-  welcome_to_will_crappy_storage_machin_with_3command();
-  command = fgets(stdin);
-  execute(command);
-
-}
-
-
-//ou alors
-//https://github.com/RPISEC/MBE/blob/2b0b6773eb36e6375186126b0fe489ce6503d2b6/src/lab03/lab3A.c
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "utils.h"
-
-#define STORAGE_SIZE 100
-
-/* gcc -Wall -z execstack -o lab3A lab3A.c */
 
 /* get a number from the user and store it */
 int store_number(unsigned int * data)
@@ -72,7 +32,7 @@ int store_number(unsigned int * data)
     if(index % 3 == 0 || (input >> 24) == 0xb7)
     {
         printf(" *** ERROR! ***\n");
-        printf("   This index is reserved for quend!\n");
+        printf("   This index is reserved for wil!\n");
         printf(" *** ERROR! ***\n");
 
         return 1;
@@ -109,14 +69,14 @@ int main(int argc, char * argv[], char * envp[])
     clear_envp(envp);
 
     printf("----------------------------------------------------\n"\
-           "  Welcome to quend's crappy number storage service!  \n"\
+           "  Welcome to wil's crappy number storage service!  \n"\
            "----------------------------------------------------\n"\
            " Commands:                                          \n"\
            "    store - store a number into the data storage    \n"\
            "    read  - read a number from the data storage     \n"\
            "    quit  - exit the program                        \n"\
            "----------------------------------------------------\n"\
-           "   quend has reserved some storage for herself :>    \n"\
+           "   wil has reserved some storage :>    \n"\
            "----------------------------------------------------\n"\
            "\n");
 
@@ -151,4 +111,3 @@ int main(int argc, char * argv[], char * envp[])
 
     return EXIT_SUCCESS;
 }
-
