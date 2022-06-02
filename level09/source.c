@@ -31,7 +31,8 @@ int set_msg() {
 
   puts(">: Msg @Unix-Dude");
   printf("\n");
-
+  char *msg= fgets(stdin);
+  strncpy(msg)
 }
 
 
@@ -40,7 +41,7 @@ int handle_message() {
   set_username();
   set_msg();
 
-  puts(": Msg sent!\n");
+  puts(">: Msg sent!\n");
 
 }
 
