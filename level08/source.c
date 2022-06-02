@@ -6,8 +6,15 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void log_wrapper(FILE* file, char *a, char *b) {
+void log_wrapper(FILE* file, char *log_description, char *path) {
+  char line[0x110 - 0x8];
 
+  strcpy(line, log_description);
+
+  snprintf(line + strlen(line), 0xfe - strlen(line), path);
+  line[strcspn(line, "\n")] = '\0';
+  fprintf(file, "LOG: %s\n", line);
+  // Canary
 }
 
 int main(int argc, char **argv)
@@ -34,7 +41,7 @@ int main(int argc, char **argv)
   path = "./backups/";
   strncat(path, argv[1], strlen(path));
 
-  if ((fd = open(path, 0xc1, 0x1b0)) == 0) {
+  if ((fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0660)) == 0) {
     printf("ERROR: Failed to open %s%s\n", "./backups/", argv[1]);
     exit(1);
   }
