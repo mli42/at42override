@@ -79,7 +79,7 @@ int store_number(unsigned int * data)
     }
 
     /* save the number to data storage */
-    data[index] = input;
+    data[index] = input; // en asm index << 2
 
     return 0;
 }
