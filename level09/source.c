@@ -7,9 +7,9 @@ int secret_backdoor() {
 }
 
 
-int set_username() {
+int set_username(char *c) {
 
-  char *username = fgets(stdin);
+  char *username = fgets(stdin, 128);
 
   int i = 0;
   while(username[i] != '\0')
@@ -17,14 +17,14 @@ int set_username() {
     if (i > 0x28)
     {
       break;
-    i++;
     }
+      i++;
   }
   printf("welcome %s", username);
 }
 
-int set_msg() {
-  
+int set_msg(char *c) {
+
   int index = 0x128;
   while(index)
     index--;
@@ -37,9 +37,13 @@ int set_msg() {
 
 
 int handle_message() {
+  char str[200]; 
 
-  set_username();
-  set_msg();
+  bzero(&str[140], 32);
+
+
+  set_username("\n");
+  set_msg("\n");
 
   puts(">: Msg sent!\n");
 
