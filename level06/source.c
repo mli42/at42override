@@ -1,4 +1,8 @@
-
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/ptrace.h>
+#include <string.h>
 
 int auth(char *login, int pass) {
 
@@ -11,37 +15,38 @@ int auth(char *login, int pass) {
       puts(); //tampering detected
       return false;
     }
-    // tres flou
-    login[3]
+    // Calcul du password en fonction du login
+    int true_pass = login;
 
-
-    return true
+    if (true_pass == pass)
+      return true;
+    else
+      return false;
   }
 }
 
 
 int main() {
+  char login[0x30 - 0x20] = { 0 };
+  unsigned int password;
 
-  puts();   // ***********************************
-  puts();  //         *		level06		  *
-  puts();   
-  printf("-> login: ");  //***********************************
-  char *login = fgets(stdin);  //--> login
-  puts();
-  puts();
-  puts();
-  //  ***********************************
-  //  ***** NEW ACCOUNT DETECTED ********
-  //  ***********************************
+  puts("***********************************");
+  puts("*\t\tlevel06\t\t  *");
+  puts("***********************************");
+  printf("-> Enter Login: ");
+  fgets(login, 0x20,stdin);
+
+  puts("***********************************");
+  puts("***** NEW ACCOUNT DETECTED ********");
+  puts("***********************************");
   printf("-> Enter Serial: ");
-  char *password = scanf(stdin);
+  scanf("%u", &password);
+
   if (auth())
   {
-    puts("authenticated ! ");
+    puts("Authenticated!");
     system("/bin/sh");
   }
-  else
-    __stack_chk_fail();
-
+  // __stack_chk_fail(); // canary protection
   return(0);
 }
