@@ -5,7 +5,7 @@
 typedef struct huge_struct {
   char msg[140];
   char username[40];
-  int coucou;
+  int size;
 } huge_structure;
 
 void secret_backdoor(void) {
@@ -15,7 +15,7 @@ void secret_backdoor(void) {
   system(cmd);
 }
 
-void set_username(huge_structure *structe) {
+void set_username(huge_structure *data) {
   int i;
   char username[128];
 
@@ -27,32 +27,31 @@ void set_username(huge_structure *structe) {
   fgets(username, 0x80, stdin);
 
   i = 0;
-  while(i <= 0x28 || structe->username[i] != '\0')
+  while(i <= 0x28 || data->username[i] != '\0')
   {
-    structe->username[i] = username[i];
+    data->username[i] = username[i];
     i++;
   }
-  printf(">: Welcome, %s", structe->username);
+  printf(">: Welcome, %s", data->username);
 }
 
-void set_msg(huge_structure *structe) {
+void set_msg(huge_structure *data) {
   char password[0x400];
 
   bzero(password, 0x80 * 8); // == 0x400 == 1024
   puts(">: Msg @Unix-Dude");
   printf(">>: ");
   fgets(password, 0x400, stdin);
-  strncpy(structe->msg, password, password[0xb4]);
+  strncpy(data->msg, password, data->size);
 }
 
-
 void handle_message(void) {
-  char buffer[0xc0 - 0xc];
+  huge_structure data;
 
-  huge_structure structe;
-  bzero(&structe.username, 40);
-  set_username(&structe);
-  set_msg(&structe);
+  bzero(&data.username, 40);
+  data.size = 0x8c;
+  set_username(&data);
+  set_msg(&data);
   puts(">: Msg sent!\n");
 }
 
