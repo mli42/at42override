@@ -1,61 +1,62 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+typedef struct huge_struct {
+  char msg[140];
+  char username[40];
+  int coucou;
+} huge_structure;
 
-int secret_backdoor() {
+void secret_backdoor(void) {
+  char cmd[0x80];
 
-  char *cmd = fgets(stdin);
+  fgets(cmd, 0x80, stdin);
   system(cmd);
 }
 
+void set_username(huge_structure *structe) {
+  int i;
+  char username[128];
 
-int set_username(char *c) {
+  bzero(username, 0x10 * 8); // == 128
+  puts(">: Enter your username");
 
-  char *username = fgets(stdin, 128);
 
-  int i = 0;
-  while(username[i] != '\0')
+  printf(">>: ");
+  fgets(username, 0x80, stdin);
+
+  i = 0;
+  while(i <= 0x28 || structe->username[i] != '\0')
   {
-    if (i > 0x28)
-    {
-      break;
-    }
-      i++;
+    structe->username[i] = username[i];
+    i++;
   }
-  printf("welcome %s", username);
+  printf(">: Welcome, %s", structe->username);
 }
 
-int set_msg(char *c) {
+void set_msg(huge_structure *structe) {
+  char password[0x400];
 
-  int index = 0x128;
-  while(index)
-    index--;
-
+  bzero(password, 0x80 * 8); // == 0x400 == 1024
   puts(">: Msg @Unix-Dude");
-  printf("\n");
-  char *msg= fgets(stdin);
-  strncpy(msg)
+  printf(">>: ");
+  fgets(password, 0x400, stdin);
+  strncpy(structe->msg, password, password[0xb4]);
 }
 
 
-int handle_message() {
-  char str[200]; 
+void handle_message(void) {
+  char buffer[0xc0 - 0xc];
 
-  bzero(&str[140], 32);
-
-
-  set_username("\n");
-  set_msg("\n");
-
+  huge_structure structe;
+  bzero(&structe.username, 40);
+  set_username(&structe);
+  set_msg(&structe);
   puts(">: Msg sent!\n");
-
 }
 
-
-int main() {
-
-  puts("
-      --------------------------------------------
-      |   ~Welcome to l33t-m$n ~    v1337        |
-      --------------------------------------------
-      ");
+int main(void) {
+  puts("--------------------------------------------\n|   ~Welcome to l33t-m$n ~    v1337        |\n--------------------------------------------");
   handle_message();
 }
